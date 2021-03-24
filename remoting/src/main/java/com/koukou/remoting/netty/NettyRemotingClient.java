@@ -315,7 +315,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
     }
 
     @Override
-    public void updateNameServerAddressList(List<String> addrs) {
+    public void updateServerAddressList(List<String> addrs) {
         List<String> old = this.namesrvAddrList.get();
         boolean update = false;
 
@@ -571,7 +571,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
     }
 
     @Override
-    public List<String> getNameServerAddressList() {
+    public List<String> getServerAddressList() {
         return this.namesrvAddrList.get();
     }
 

@@ -3,7 +3,7 @@ package com.koukou.remoting;
 import com.koukou.remoting.common.vo.RequestCode;
 import com.koukou.remoting.netty.NettyClientConfig;
 import com.koukou.remoting.netty.NettyRemotingClient;
-import com.koukou.remoting.netty.impl.DefaultRequestProcessor;
+import com.koukou.remoting.netty.impl.ServerRequestProcessor;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class ClientTest {
         ips.add("172.0.0.1");
 
         nettyRemotingClient.updateNameServerAddressList(ips);
-        nettyRemotingClient.registerProcessor(RequestCode.SEND_MESSAGE, new DefaultRequestProcessor(), null);
+        nettyRemotingClient.registerProcessor(RequestCode.SEND_MESSAGE, new ServerRequestProcessor(), null);
     }
 
 }

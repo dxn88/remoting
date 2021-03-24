@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @SuppressWarnings("all")
-public class DefaultRequestProcessor extends AsyncNettyRequestProcessor implements NettyRequestProcessor {
+public class ServerRequestProcessor extends AsyncNettyRequestProcessor implements NettyRequestProcessor {
 
     private Semaphore sendMessageFlow = new Semaphore(10, true);
 

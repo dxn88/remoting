@@ -70,11 +70,13 @@ public class ServerRequestProcessor extends AsyncNettyRequestProcessor implement
         boolean acquired = this.sendMessageFlow.tryAcquire(3000, TimeUnit.MILLISECONDS);
         if (acquired) {
             try {
+                HashMap<String, String> extFields = request.getExtFields();
+                System.out.println("extFields = " + extFields);
+
                 final RemotingCommand response = RemotingCommand.createResponseCommand(null);
                 response.setOpaque(request.getOpaque());
-
-                response.addExtField(MessageConst.OWNER, "dxn");
-                response.addExtField(MessageConst.VIP, String.valueOf(1));
+                response.addExtField(MessageConst.NAME, "server:" + extFields.get(MessageConst.NAME));
+                response.addExtField(MessageConst.PRODUCT_ID, extFields.get(MessageConst.PRODUCT_ID) + "0");
 
                 byte[] bytes = doProcessSendMessage(request);
 
@@ -91,8 +93,6 @@ public class ServerRequestProcessor extends AsyncNettyRequestProcessor implement
     }
 
     private byte[] doProcessSendMessage(RemotingCommand request) {
-        HashMap<String, String> extFields = request.getExtFields();
-        System.out.println("extFields = " + extFields);
 
         byte[] body = request.getBody();
         String result = new String(body, CharsetUtil.UTF_8);
@@ -103,7 +103,7 @@ public class ServerRequestProcessor extends AsyncNettyRequestProcessor implement
 
     @Override
     public boolean rejectRequest() {
-        return sendMessageFlow.availablePermits() > 0;
+        return sendMessageFlow.availablePermits() <= 0;
     }
 
 

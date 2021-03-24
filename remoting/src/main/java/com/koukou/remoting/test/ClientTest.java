@@ -1,6 +1,8 @@
-package com.koukou.remoting;
+package com.koukou.remoting.test;
 
+import com.koukou.remoting.CommandCustomHeader;
 import com.koukou.remoting.common.vo.RequestCode;
+import com.koukou.remoting.exception.RemotingCommandException;
 import com.koukou.remoting.exception.RemotingConnectException;
 import com.koukou.remoting.exception.RemotingSendRequestException;
 import com.koukou.remoting.exception.RemotingTimeoutException;
@@ -20,10 +22,10 @@ import java.util.ArrayList;
  */
 public class ClientTest {
 
-    public static String IP_PORT = "172.0.0.1:8888";
-    public static Integer TIME_OUT = 3000;
+    public static String IP_PORT = "127.0.0.1:8888";
+    public static Integer TIME_OUT = 30000;
 
-    public static void main(String[] args) throws InterruptedException, RemotingTimeoutException, RemotingSendRequestException, RemotingConnectException {
+    public static void main(String[] args) throws InterruptedException, RemotingTimeoutException, RemotingSendRequestException, RemotingConnectException, RemotingCommandException {
         NettyClientConfig nettyClientConfig = new NettyClientConfig();
         NettyRemotingClient nettyRemotingClient = new NettyRemotingClient(nettyClientConfig);
 
@@ -39,6 +41,8 @@ public class ClientTest {
                 , messageRequestHeader);
         requestCommand.setBody("give me product data".getBytes(CharsetUtil.UTF_8));
         RemotingCommand responseCommand = nettyRemotingClient.invokeSync(IP_PORT, requestCommand, TIME_OUT);
+        CommandCustomHeader commandCustomHeader = responseCommand.decodeCommandCustomHeader(SendMessageRequestHeader.class);
+        System.out.println("commandCustomHeader = " + commandCustomHeader);
         byte[] body = responseCommand.getBody();
         String result = new String(body, CharsetUtil.UTF_8);
         System.out.println("result = " + result);

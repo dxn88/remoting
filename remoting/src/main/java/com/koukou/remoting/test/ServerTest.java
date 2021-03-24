@@ -1,4 +1,4 @@
-package com.koukou.remoting;
+package com.koukou.remoting.test;
 
 import com.koukou.remoting.common.vo.RequestCode;
 import com.koukou.remoting.netty.NettyRemotingServer;

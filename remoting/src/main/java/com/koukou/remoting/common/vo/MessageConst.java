@@ -6,6 +6,6 @@ package com.koukou.remoting.common.vo;
  * @since 1.0.0
  */
 public class MessageConst {
-    public static final String OWNER = "owner";
-    public static final String VIP = "vip";
+    public static final String NAME = "name";
+    public static final String PRODUCT_ID = "productId";
 }

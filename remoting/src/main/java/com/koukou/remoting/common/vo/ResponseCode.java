@@ -6,4 +6,5 @@ package com.koukou.remoting.common.vo;
  * @since 1.0.0
  */
 public class ResponseCode {
+    public static final int SUCCESS = 0;
 }

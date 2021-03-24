@@ -30,7 +30,17 @@ public class ClientTest {
 
         RemotingCommand requestCommand = consturctRequest();
 
-        client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
+        for (int i = 0; i < 15; i++) {
+            Thread thread = new Thread(() -> {
+                try {
+                    RemotingCommand responseCommand =  client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
+                    callback(responseCommand);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+        }
 
         RemotingCommand responseCommand = client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
 
@@ -69,8 +79,13 @@ public class ClientTest {
 
         System.out.println("commandCustomHeader = " + commandCustomHeader);
         byte[] body = responseCommand.getBody();
-        String result = new String(body, CharsetUtil.UTF_8);
-        System.out.println("result = " + result);
+        if (body != null) {
+            String result = new String(body, CharsetUtil.UTF_8);
+            System.out.println("result = " + result);
+        }
+
+        String remark = responseCommand.getRemark();
+        System.out.println("remark = " + remark);
     }
 
 }

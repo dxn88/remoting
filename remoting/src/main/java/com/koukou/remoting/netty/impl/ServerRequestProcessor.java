@@ -16,7 +16,6 @@
  */
 package com.koukou.remoting.netty.impl;
 
-import com.koukou.remoting.common.RemotingHelper;
 import com.koukou.remoting.common.vo.MessageConst;
 import com.koukou.remoting.common.vo.RequestCode;
 import com.koukou.remoting.common.vo.ResponseCode;
@@ -37,18 +36,18 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("all")
 public class ServerRequestProcessor extends AsyncNettyRequestProcessor implements NettyRequestProcessor {
 
-    private Semaphore sendMessageFlow = new Semaphore(10, true);
+    private Semaphore sendMessageFlow = new Semaphore(5, true);
 
     @Override
     public RemotingCommand processRequest(ChannelHandlerContext ctx,
                                           RemotingCommand request) throws RemotingCommandException, InterruptedException {
 
-        if (ctx != null) {
-            log.debug("receive request, {} {} {}",
-                    request.getCode(),
-                    RemotingHelper.parseChannelRemoteAddr(ctx.channel()),
-                    request);
-        }
+//        if (ctx != null) {
+//            log.debug("receive request, {} {} {}",
+//                    request.getCode(),
+//                    RemotingHelper.parseChannelRemoteAddr(ctx.channel()),
+//                    request);
+//        }
 
         switch (request.getCode()) {
             case RequestCode.SEND_MESSAGE:
@@ -82,7 +81,11 @@ public class ServerRequestProcessor extends AsyncNettyRequestProcessor implement
 
                 response.setBody(bytes);
                 response.setCode(ResponseCode.SUCCESS);
-                response.setRemark(null);
+                response.setRemark("normal");
+
+                Thread.sleep(1000);
+
+                System.out.println("threadName = " + Thread.currentThread().getName());
                 return response;
             } finally {
                 sendMessageFlow.release();

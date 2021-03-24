@@ -50,6 +50,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
+@SuppressWarnings("all")
 public class NettyRemotingClient extends NettyRemotingAbstract implements RemotingClient {
 
     private static final long LOCK_TIMEOUT_MILLIS = 3000;
@@ -433,6 +434,19 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
         }
 
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(" = "+ -1%3);
+
+        int abs = Math.abs(Integer.MIN_VALUE);
+        System.out.println("abs = " + abs);
+        int abs1 = Math.abs(Integer.MIN_VALUE-1);
+        System.out.println("abs1 = " + abs1);
+
+        int abs2 = Math.abs(Integer.MAX_VALUE+1);
+        System.out.println("abs2 = " + abs2);
+
     }
 
     private Channel createChannel(final String addr) throws InterruptedException {

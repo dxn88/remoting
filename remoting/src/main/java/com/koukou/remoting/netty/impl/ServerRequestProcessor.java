@@ -98,7 +98,7 @@ public class ServerRequestProcessor extends AsyncNettyRequestProcessor implement
         String result = new String(body, CharsetUtil.UTF_8);
         System.out.println("result = " + result);
 
-        return body;
+        return "return your data from server".getBytes();
     }
 
     @Override

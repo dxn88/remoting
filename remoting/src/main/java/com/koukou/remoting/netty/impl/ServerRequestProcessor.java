@@ -28,6 +28,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -90,6 +91,9 @@ public class ServerRequestProcessor extends AsyncNettyRequestProcessor implement
     }
 
     private byte[] doProcessSendMessage(RemotingCommand request) {
+        HashMap<String, String> extFields = request.getExtFields();
+        System.out.println("extFields = " + extFields);
+
         byte[] body = request.getBody();
         String result = new String(body, CharsetUtil.UTF_8);
         System.out.println("result = " + result);

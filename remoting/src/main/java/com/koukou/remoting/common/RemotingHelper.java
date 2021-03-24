@@ -16,14 +16,12 @@
  */
 package com.koukou.remoting.common;
 
+import com.koukou.remoting.exception.RemotingConnectException;
+import com.koukou.remoting.exception.RemotingSendRequestException;
+import com.koukou.remoting.exception.RemotingTimeoutException;
+import com.koukou.remoting.protocol.RemotingCommand;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.logging.InternalLogger;
-import org.apache.rocketmq.logging.InternalLoggerFactory;
-import org.apache.rocketmq.remoting.exception.RemotingConnectException;
-import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
-import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -63,7 +61,7 @@ public class RemotingHelper {
 
     public static RemotingCommand invokeSync(final String addr, final RemotingCommand request,
         final long timeoutMillis) throws InterruptedException, RemotingConnectException,
-        RemotingSendRequestException, RemotingTimeoutException {
+            RemotingSendRequestException, RemotingTimeoutException {
         long beginTime = System.currentTimeMillis();
         SocketAddress socketAddress = RemotingUtil.string2SocketAddress(addr);
         SocketChannel socketChannel = RemotingUtil.connect(socketAddress);

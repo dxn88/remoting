@@ -20,9 +20,8 @@ package com.koukou.remoting.netty;
 import io.netty.handler.ssl.*;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
-import org.apache.rocketmq.logging.InternalLogger;
-import org.apache.rocketmq.logging.InternalLoggerFactory;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
+import lombok.extern.slf4j.Slf4j;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,8 +30,10 @@ import java.io.InputStream;
 import java.security.cert.CertificateException;
 import java.util.Properties;
 
-import static org.apache.rocketmq.remoting.netty.TlsSystemConfig.*;
+import static com.koukou.remoting.netty.TlsSystemConfig.*;
 
+
+@Slf4j
 public class TlsHelper {
 
     public interface DecryptionStrategy {
@@ -46,8 +47,6 @@ public class TlsHelper {
          */
         InputStream decryptPrivateKey(String privateKeyEncryptPath, boolean forClient) throws IOException;
     }
-
-    private static final InternalLogger LOGGER = InternalLoggerFactory.getLogger(RemotingHelper.ROCKETMQ_REMOTING);
 
     private static DecryptionStrategy decryptionStrategy = new DecryptionStrategy() {
         @Override
@@ -70,10 +69,10 @@ public class TlsHelper {
         SslProvider provider;
         if (OpenSsl.isAvailable()) {
             provider = SslProvider.OPENSSL;
-            LOGGER.info("Using OpenSSL provider");
+            log.info("Using OpenSSL provider");
         } else {
             provider = SslProvider.JDK;
-            LOGGER.info("Using JDK SSL provider");
+            log.info("Using JDK SSL provider");
         }
 
         if (forClient) {
@@ -133,7 +132,7 @@ public class TlsHelper {
 
     private static void extractTlsConfigFromFile(final File configFile) {
         if (!(configFile.exists() && configFile.isFile() && configFile.canRead())) {
-            LOGGER.info("Tls config file doesn't exist, skip it");
+            log.info("Tls config file doesn't exist, skip it");
             return;
         }
 
@@ -169,20 +168,20 @@ public class TlsHelper {
     }
 
     private static void logTheFinalUsedTlsConfig() {
-        LOGGER.info("Log the final used tls related configuration");
-        LOGGER.info("{} = {}", TLS_TEST_MODE_ENABLE, tlsTestModeEnable);
-        LOGGER.info("{} = {}", TLS_SERVER_NEED_CLIENT_AUTH, tlsServerNeedClientAuth);
-        LOGGER.info("{} = {}", TLS_SERVER_KEYPATH, tlsServerKeyPath);
-        LOGGER.info("{} = {}", TLS_SERVER_KEYPASSWORD, tlsServerKeyPassword);
-        LOGGER.info("{} = {}", TLS_SERVER_CERTPATH, tlsServerCertPath);
-        LOGGER.info("{} = {}", TLS_SERVER_AUTHCLIENT, tlsServerAuthClient);
-        LOGGER.info("{} = {}", TLS_SERVER_TRUSTCERTPATH, tlsServerTrustCertPath);
+        log.info("Log the final used tls related configuration");
+        log.info("{} = {}", TLS_TEST_MODE_ENABLE, tlsTestModeEnable);
+        log.info("{} = {}", TLS_SERVER_NEED_CLIENT_AUTH, tlsServerNeedClientAuth);
+        log.info("{} = {}", TLS_SERVER_KEYPATH, tlsServerKeyPath);
+        log.info("{} = {}", TLS_SERVER_KEYPASSWORD, tlsServerKeyPassword);
+        log.info("{} = {}", TLS_SERVER_CERTPATH, tlsServerCertPath);
+        log.info("{} = {}", TLS_SERVER_AUTHCLIENT, tlsServerAuthClient);
+        log.info("{} = {}", TLS_SERVER_TRUSTCERTPATH, tlsServerTrustCertPath);
 
-        LOGGER.info("{} = {}", TLS_CLIENT_KEYPATH, tlsClientKeyPath);
-        LOGGER.info("{} = {}", TLS_CLIENT_KEYPASSWORD, tlsClientKeyPassword);
-        LOGGER.info("{} = {}", TLS_CLIENT_CERTPATH, tlsClientCertPath);
-        LOGGER.info("{} = {}", TLS_CLIENT_AUTHSERVER, tlsClientAuthServer);
-        LOGGER.info("{} = {}", TLS_CLIENT_TRUSTCERTPATH, tlsClientTrustCertPath);
+        log.info("{} = {}", TLS_CLIENT_KEYPATH, tlsClientKeyPath);
+        log.info("{} = {}", TLS_CLIENT_KEYPASSWORD, tlsClientKeyPassword);
+        log.info("{} = {}", TLS_CLIENT_CERTPATH, tlsClientCertPath);
+        log.info("{} = {}", TLS_CLIENT_AUTHSERVER, tlsClientAuthServer);
+        log.info("{} = {}", TLS_CLIENT_TRUSTCERTPATH, tlsClientTrustCertPath);
     }
 
     private static ClientAuth parseClientAuthMode(String authMode) {

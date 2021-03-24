@@ -17,7 +17,8 @@
 
 package com.koukou.remoting;
 
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
+
+import com.koukou.remoting.protocol.RemotingCommand;
 
 public interface RPCHook {
     void doBeforeRequest(final String remoteAddr, final RemotingCommand request);

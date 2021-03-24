@@ -16,12 +16,12 @@
  */
 package com.koukou.remoting;
 
-import org.apache.rocketmq.remoting.exception.RemotingConnectException;
-import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
-import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
-import org.apache.rocketmq.remoting.exception.RemotingTooMuchRequestException;
-import org.apache.rocketmq.remoting.netty.NettyRequestProcessor;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
+import com.koukou.remoting.exception.RemotingConnectException;
+import com.koukou.remoting.exception.RemotingSendRequestException;
+import com.koukou.remoting.exception.RemotingTimeoutException;
+import com.koukou.remoting.exception.RemotingTooMuchRequestException;
+import com.koukou.remoting.netty.NettyRequestProcessor;
+import com.koukou.remoting.protocol.RemotingCommand;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,11 +34,11 @@ public interface RemotingClient extends RemotingService {
 
     RemotingCommand invokeSync(final String addr, final RemotingCommand request,
                                final long timeoutMillis) throws InterruptedException, RemotingConnectException,
-        RemotingSendRequestException, RemotingTimeoutException;
+            RemotingSendRequestException, RemotingTimeoutException;
 
     void invokeAsync(final String addr, final RemotingCommand request, final long timeoutMillis,
                      final InvokeCallback invokeCallback) throws InterruptedException, RemotingConnectException,
-        RemotingTooMuchRequestException, RemotingTimeoutException, RemotingSendRequestException;
+            RemotingTooMuchRequestException, RemotingTimeoutException, RemotingSendRequestException;
 
     void invokeOneway(final String addr, final RemotingCommand request, final long timeoutMillis)
         throws InterruptedException, RemotingConnectException, RemotingTooMuchRequestException,

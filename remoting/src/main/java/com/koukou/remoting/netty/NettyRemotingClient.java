@@ -16,6 +16,18 @@
  */
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.ChannelEventListener;
+import com.koukou.remoting.InvokeCallback;
+import com.koukou.remoting.RPCHook;
+import com.koukou.remoting.RemotingClient;
+import com.koukou.remoting.common.Pair;
+import com.koukou.remoting.common.RemotingHelper;
+import com.koukou.remoting.common.RemotingUtil;
+import com.koukou.remoting.exception.RemotingConnectException;
+import com.koukou.remoting.exception.RemotingSendRequestException;
+import com.koukou.remoting.exception.RemotingTimeoutException;
+import com.koukou.remoting.exception.RemotingTooMuchRequestException;
+import com.koukou.remoting.protocol.RemotingCommand;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -25,20 +37,7 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
-import org.apache.rocketmq.logging.InternalLogger;
-import org.apache.rocketmq.logging.InternalLoggerFactory;
-import org.apache.rocketmq.remoting.ChannelEventListener;
-import org.apache.rocketmq.remoting.InvokeCallback;
-import org.apache.rocketmq.remoting.RPCHook;
-import org.apache.rocketmq.remoting.RemotingClient;
-import org.apache.rocketmq.remoting.common.Pair;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
-import org.apache.rocketmq.remoting.common.RemotingUtil;
-import org.apache.rocketmq.remoting.exception.RemotingConnectException;
-import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
-import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
-import org.apache.rocketmq.remoting.exception.RemotingTooMuchRequestException;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.SocketAddress;
@@ -50,8 +49,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+@Slf4j
 public class NettyRemotingClient extends NettyRemotingAbstract implements RemotingClient {
-    private static final InternalLogger log = InternalLoggerFactory.getLogger(RemotingHelper.ROCKETMQ_REMOTING);
 
     private static final long LOCK_TIMEOUT_MILLIS = 3000;
 

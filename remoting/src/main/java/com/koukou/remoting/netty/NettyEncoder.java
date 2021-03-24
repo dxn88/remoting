@@ -16,16 +16,14 @@
  */
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.common.RemotingHelper;
+import com.koukou.remoting.common.RemotingUtil;
+import com.koukou.remoting.protocol.RemotingCommand;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.logging.InternalLogger;
-import org.apache.rocketmq.logging.InternalLoggerFactory;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
-import org.apache.rocketmq.remoting.common.RemotingUtil;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
 import java.nio.ByteBuffer;
 

@@ -16,7 +16,7 @@
  */
 package com.koukou.remoting;
 
-import org.apache.rocketmq.remoting.netty.ResponseFuture;
+import com.koukou.remoting.netty.ResponseFuture;
 
 public interface InvokeCallback {
     void operationComplete(final ResponseFuture responseFuture);

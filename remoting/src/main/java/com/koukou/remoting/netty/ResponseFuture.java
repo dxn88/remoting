@@ -16,10 +16,10 @@
  */
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.InvokeCallback;
+import com.koukou.remoting.common.SemaphoreReleaseOnlyOnce;
+import com.koukou.remoting.protocol.RemotingCommand;
 import io.netty.channel.Channel;
-import org.apache.rocketmq.remoting.InvokeCallback;
-import org.apache.rocketmq.remoting.common.SemaphoreReleaseOnlyOnce;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

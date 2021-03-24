@@ -16,7 +16,8 @@
  */
 package com.koukou.remoting;
 
-import org.apache.rocketmq.remoting.exception.RemotingCommandException;
+
+import com.koukou.remoting.exception.RemotingCommandException;
 
 public interface CommandCustomHeader {
     void checkFields() throws RemotingCommandException;

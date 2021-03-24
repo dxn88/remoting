@@ -17,7 +17,8 @@
 
 package com.koukou.remoting.netty;
 
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
+
+import com.koukou.remoting.protocol.RemotingCommand;
 
 public interface RemotingResponseCallback {
     void callback(RemotingCommand response);

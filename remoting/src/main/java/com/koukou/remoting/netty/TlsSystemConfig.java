@@ -17,8 +17,8 @@
 
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.common.TlsMode;
 import io.netty.handler.ssl.SslContext;
-import org.apache.rocketmq.remoting.common.TlsMode;
 
 public class TlsSystemConfig {
     public static final String TLS_SERVER_MODE = "tls.server.mode";

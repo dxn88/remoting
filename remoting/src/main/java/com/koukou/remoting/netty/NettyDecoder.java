@@ -16,19 +16,20 @@
  */
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.common.RemotingHelper;
+import com.koukou.remoting.common.RemotingUtil;
+import com.koukou.remoting.protocol.RemotingCommand;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import org.apache.rocketmq.logging.InternalLogger;
-import org.apache.rocketmq.logging.InternalLoggerFactory;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
-import org.apache.rocketmq.remoting.common.RemotingUtil;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
+import lombok.extern.slf4j.Slf4j;
+
 
 import java.nio.ByteBuffer;
 
+
+@Slf4j
 public class NettyDecoder extends LengthFieldBasedFrameDecoder {
-    private static final InternalLogger log = InternalLoggerFactory.getLogger(RemotingHelper.ROCKETMQ_REMOTING);
 
     private static final int FRAME_MAX_LENGTH =
         Integer.parseInt(System.getProperty("com.rocketmq.remoting.frameMaxLength", "16777216"));

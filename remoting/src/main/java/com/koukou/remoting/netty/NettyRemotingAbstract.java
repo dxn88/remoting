@@ -16,26 +16,25 @@
  */
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.ChannelEventListener;
+import com.koukou.remoting.InvokeCallback;
+import com.koukou.remoting.RPCHook;
+import com.koukou.remoting.common.Pair;
+import com.koukou.remoting.common.RemotingHelper;
+import com.koukou.remoting.common.SemaphoreReleaseOnlyOnce;
+import com.koukou.remoting.common.ServiceThread;
+import com.koukou.remoting.exception.RemotingSendRequestException;
+import com.koukou.remoting.exception.RemotingTimeoutException;
+import com.koukou.remoting.exception.RemotingTooMuchRequestException;
+import com.koukou.remoting.protocol.RemotingCommand;
+import com.koukou.remoting.protocol.RemotingSysResponseCode;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslHandler;
-import org.apache.rocketmq.logging.InternalLogger;
-import org.apache.rocketmq.logging.InternalLoggerFactory;
-import org.apache.rocketmq.remoting.ChannelEventListener;
-import org.apache.rocketmq.remoting.InvokeCallback;
-import org.apache.rocketmq.remoting.RPCHook;
-import org.apache.rocketmq.remoting.common.Pair;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
-import org.apache.rocketmq.remoting.common.SemaphoreReleaseOnlyOnce;
-import org.apache.rocketmq.remoting.common.ServiceThread;
-import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
-import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
-import org.apache.rocketmq.remoting.exception.RemotingTooMuchRequestException;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
-import org.apache.rocketmq.remoting.protocol.RemotingSysResponseCode;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.SocketAddress;
 import java.util.*;
@@ -43,13 +42,8 @@ import java.util.Map.Entry;
 import java.util.concurrent.*;
 
 @SuppressWarnings("all")
+@Slf4j
 public abstract class NettyRemotingAbstract {
-
-    /**
-     * Remoting logger instance.
-     */
-    private static final InternalLogger log = InternalLoggerFactory.getLogger(RemotingHelper.ROCKETMQ_REMOTING);
-
     /**
      * Semaphore to limit maximum number of on-going one-way requests, which protects system memory footprint.
      */
@@ -92,11 +86,6 @@ public abstract class NettyRemotingAbstract {
      * custom rpc hooks
      */
     protected List<RPCHook> rpcHooks = new ArrayList<RPCHook>();
-
-
-    static {
-        NettyLogger.initNettyLogger();
-    }
 
     /**
      * Constructor, specifying capacity of one-way and asynchronous semaphores.

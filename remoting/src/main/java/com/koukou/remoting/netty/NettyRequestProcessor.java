@@ -16,8 +16,8 @@
  */
 package com.koukou.remoting.netty;
 
+import com.koukou.remoting.protocol.RemotingCommand;
 import io.netty.channel.ChannelHandlerContext;
-import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
 /**
  * Common remoting command processor

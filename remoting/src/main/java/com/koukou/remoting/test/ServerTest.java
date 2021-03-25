@@ -25,6 +25,7 @@ public class ServerTest {
         thread.setDaemon(true);
         return thread;
     });
+
     public static void main(String[] args) {
         NettyServerConfig nettyServerConfig = new NettyServerConfig();
         NettyRemotingServer server = new NettyRemotingServer(nettyServerConfig);

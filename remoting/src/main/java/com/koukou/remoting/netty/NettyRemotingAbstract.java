@@ -267,6 +267,8 @@ public abstract class NettyRemotingAbstract {
     public void processResponseCommand(ChannelHandlerContext ctx, RemotingCommand cmd) {
         final int opaque = cmd.getOpaque();
         final ResponseFuture responseFuture = responseTable.get(opaque);
+        // todo 存在并发问题  ！解决方案在cmd.getOpaque()之前加一个过滤并发Set
+        //  ，在wait超时的时候再去这个里面查一下，如果有等待 设置完成
         if (responseFuture != null) {
             responseFuture.setResponseCommand(cmd);
 

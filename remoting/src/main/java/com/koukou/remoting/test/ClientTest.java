@@ -28,10 +28,10 @@ public class ClientTest {
 
         NettyRemotingClient client = init();
 
+        RemotingCommand requestCommand = constructRequest();
         for (int i = 0; i < 5; i++) {
             Thread thread = new Thread(() -> {
                 try {
-                    RemotingCommand requestCommand = constructRequest();
                     RemotingCommand responseCommand =  client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
                     callback(responseCommand);
                 } catch (Exception e) {
@@ -40,7 +40,7 @@ public class ClientTest {
             });
             thread.start();
         }
-        RemotingCommand requestCommand = constructRequest();
+//        RemotingCommand requestCommand = constructRequest();
 
 //        RemotingCommand responseCommand = client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
 //

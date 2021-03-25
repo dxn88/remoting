@@ -28,11 +28,10 @@ public class ClientTest {
 
         NettyRemotingClient client = init();
 
-        RemotingCommand requestCommand = consturctRequest();
-
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 5; i++) {
             Thread thread = new Thread(() -> {
                 try {
+                    RemotingCommand requestCommand = constructRequest();
                     RemotingCommand responseCommand =  client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
                     callback(responseCommand);
                 } catch (Exception e) {
@@ -41,12 +40,13 @@ public class ClientTest {
             });
             thread.start();
         }
+        RemotingCommand requestCommand = constructRequest();
 
-        RemotingCommand responseCommand = client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
+//        RemotingCommand responseCommand = client.invokeSync(IP_PORT, requestCommand, TIME_OUT);
+//
+//        callback(responseCommand);
 
-        callback(responseCommand);
-
-        client.shutdown();
+//        client.shutdown();
     }
 
 
@@ -63,7 +63,7 @@ public class ClientTest {
         return nettyRemotingClient;
     }
 
-    public static RemotingCommand consturctRequest() {
+    public static RemotingCommand constructRequest() {
         SendMessageRequestHeader messageRequestHeader = new SendMessageRequestHeader();
         messageRequestHeader.setName("dxn");
         messageRequestHeader.setProductId(9527);
